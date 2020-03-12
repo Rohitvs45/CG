@@ -1,0 +1,131 @@
+#include<iostream>
+#include<graphics.h>
+#include<math.h>
+
+using namespace std;
+
+void flood_fill(int x , int y , int f_color , int old_color)
+{
+
+	int current = getpixel(x,y);
+	if( current == 0)               
+	{
+		putpixel( x , y , f_color);
+		flood_fill( x+1 , y     , f_color , old_color);
+		flood_fill( x   , y-1   , f_color , old_color);
+		flood_fill( x   , y+1   , f_color , old_color);
+		flood_fill( x-1 , y     , f_color , old_color);
+
+	}
+}
+
+void boundary_fill( int x , int y , int f_colour , int b_colour)
+{
+	 int current = getpixel( x, y);
+	  if( current != b_colour && current != f_colour)      
+	 {
+		    putpixel( x , y , f_colour);
+		    boundary_fill(x+1 , y    , f_colour , b_colour);
+		    boundary_fill(x-1 , y    , f_colour , b_colour);
+		    boundary_fill( x  , y+1  ,f_colour  , b_colour);
+		    boundary_fill( x  , y-1  , f_colour , b_colour);
+	 }
+}
+
+int main()
+{
+
+int ch  , ch1;
+int gd = DETECT , gm;
+
+	do
+	{
+	cout<<"\n====================================================";
+	cout<<"\n___________________ M E N U ________________________";
+	cout<<"\n 1) Rectangle \n 2) Circle \n 3) Triangle \n 4) EXit ";
+	cout<<"\n Enter your choice = ";
+	cin>>ch;
+
+		switch(ch)
+		{
+			case 1:
+				cout<<"\n 1) Flood Fill \t 2) Boundary Fill \n Enter choice =";
+				cin>>ch1;
+				initgraph( &gd , &gm , NULL);
+				rectangle(100 , 100 ,300 , 200);
+				delay(100);
+				if(ch1==1)
+				{ 
+					flood_fill(150 , 150 , RED , 0);
+					delay(100);
+				}
+				else if(ch1==2)
+				{ 
+					boundary_fill(150 , 150 , RED , WHITE);
+					delay(1000);
+				}
+				else
+				    cout<<"\n Invalid choice ";
+				    closegraph();
+		
+				break;
+			
+			case 2:
+				cout<<"\n 1) Flood Fill \t 2) Boundary Fill \n Enter choice =";
+				cin>>ch1;
+				initgraph( &gd , &gm , NULL);
+				circle( 200 , 200 , 100);
+				delay(100);
+				if(ch1==1)
+				{
+					 flood_fill(200 , 200 , BLUE , 0);
+					 delay(400);
+				}                  
+				else if(ch1==2)
+				{
+					 boundary_fill(200 , 200 , BLUE , WHITE);
+					 delay(400);
+				}
+				else
+				    cout<<"\n Invalid choice ";
+				    closegraph();
+		
+				break;
+			
+			case 3:
+				cout<<"\n 1) Flood Fill \t 2) Boundary Fill \n Enter choice =";
+				cin>>ch1;
+				initgraph( &gd , &gm , NULL);
+		
+				line(50,100 , 150 , 100);
+				line(150 , 100 , 100 , 40);
+				line(100 , 40 , 50 , 100);
+		
+				if(ch1==1)
+				{
+					 flood_fill(100 , 90 , BLUE , BLACK);
+					 delay(100);
+				}     
+				else if(ch1==2)
+				{ 
+					boundary_fill(100 , 90 , BLUE , WHITE);
+					delay(100);
+				}
+				else
+				    cout<<"\n Invalid choice ";
+				    closegraph();
+		
+				break;
+			
+			case 4:
+				cout<<"\n Exiting ... \n\n";
+				break;
+		
+
+			default :
+				cout<<"\n Invalid Choice "; 
+		}
+	}while(ch!=3);
+
+return 0;
+}
