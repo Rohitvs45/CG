@@ -1,0 +1,122 @@
+#include<iostream>
+#include<graphics.h>
+using namespace std;
+
+class algo
+{
+	float x1,x2,y1,y2,dx,dy,x,y;
+	public:
+		void accept()
+		{
+			cout<<"Enter First Coordinate\n";
+			cin>>x1>>y1;
+			cout<<"Enter Second Coordinate\n";
+			cin>>x2>>y2;
+		}
+		void dda()
+		{
+		   int gd = DETECT, gm;
+		   float step,xin,yin;
+		    
+		    initgraph(&gd, &gm, NULL);
+		   if(abs(dx) > abs(dy))
+		   	step = abs(dx);
+		   else
+		   	step = abs(dy);
+		   	
+		   xin = dx/step;
+		   yin = dy/step;
+		   x=x1;
+		   y=y1;
+		   for(int i=0; i<step; i++)
+		   {
+		   	x = x + xin;
+		   	y = y + yin; 
+		   	putpixel(round(x),round(y),GREEN);
+		   	delay(200);
+		   }		
+		   //delay(1000);
+		   getch();
+		   closegraph();
+		}
+		void bre()
+		{
+			int gd = DETECT, gm;
+			float pk;
+			 
+		   	 initgraph(&gd, &gm, NULL);
+			dx = x2-x1;
+			dy = y2-y1;
+			x = x1; y = y1; 
+			if(abs(dy) < abs(dx))
+			{
+				pk = 2*abs(dy)-abs(dx);
+				putpixel(x,y,GREEN);
+				for(int i=0;i<abs(dx); i++)
+				{
+					x = x+1;
+					if(pk<0)
+					{
+						pk = pk + 2*abs(dy);
+					} 
+					else
+					{
+						y = y+1;
+						pk = pk + 2*abs(dy)-2*abs(dx);
+					}
+					putpixel(x,y,GREEN);
+					delay(20);
+				}
+				delay(1000);
+			}
+			else
+			{
+				pk = 2*abs(dx)-abs(dy);
+				putpixel(x,y,GREEN);
+				for(int i=0;i<abs(dy); i++)
+				{
+					y = y+1;
+					if(pk<0)
+					{
+						pk = pk + 2*abs(dx);
+					} 
+					else
+					{
+						x = x+1;
+						pk = pk + 2*abs(dx)-2*abs(dy);
+					}
+					putpixel(x,y,GREEN);
+					delay(20);
+				}
+			delay(1000);
+			}
+		  getch();
+		   closegraph();
+		}
+};
+int main()
+{
+	algo a;
+	char ch;
+	int c;
+	do
+	{
+		cout<<"1.Accept\n2.DDA\n3.Bresenham's\n";
+		cout<<"Enter Your Choice\n";
+		cin>>c;
+		switch(c)
+		{
+			case 1:
+				a.accept();
+				break;
+			case 2:
+				a.dda();
+				break;
+			case 3:
+				a.bre();
+		}
+		cout<<"For Continue Press y\n";
+		cin>>ch;
+	}while(ch=='y' || ch=='y');
+return 0;	
+}
